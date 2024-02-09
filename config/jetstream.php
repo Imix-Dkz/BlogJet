@@ -59,9 +59,9 @@ return [
 
     'features' => [
         // Features::termsAndPrivacyPolicy(),
-        // Features::profilePhotos(),
-        // Features::api(),
-        Features::teams(['invitations' => true]),
+        Features::profilePhotos(), //Foto de perfil en sessión
+        // Features::api()
+        //Features::teams(['invitations' => true]), //eliminar/agregar la opción de grupos(familiares)
         Features::accountDeletion(),
     ],
 
