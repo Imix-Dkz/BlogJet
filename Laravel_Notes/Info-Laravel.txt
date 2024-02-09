@@ -1,0 +1,203 @@
+20240201 - Original Init
+20240203 - cl10 > Fin de c20: Que es asignación masiva
+20240208 - cl10 > Fin de c26: Como crear un formulario de Contacto, p/Correo
+20240209 - cl10 > 27 - Qué es Laravel Jetstream - Curso Laravel 9 desde cero
+
+[ FRAMEWORK - Laraverl, desde el 2011 ]
+    Un framework es un marco de trabajo que tiene como objetivo facilitar la solución de problemas que pueden surgir al programar12345. Los frameworks aceleran el proceso de programar facilitando tareas como la organización del código o el trabajo en equipo dentro de un proyecto1. Un framework es un esquema o patrón que nos ofrece un entorno genérico para escribir código en un lenguaje concreto3. Utilizar un framework permite agilizar los procesos de desarrollo ya que evita tener que escribir código de forma repetitiva, asegura unas buenas prácticas y la consistencia del código
+
+	Es un framwork opensource, con la intención de limitar el código spagetti...
+
+	Usar paquietes, pero separar las dependencias de desarrollo vs la dependencias de producción ...
+
+	Patrón de diseño VISTA-CONTROLADOR:
+    	[Usuario]
+        	1.- Utiliza: [Controlador]
+        	2.- Manipula:[Modelo]
+        	3.- Notifica: [Controlador]
+            	4.-Actualiza:[Vista]
+        	5.-Se muestra a:[Usuario]
+    
+[Crear controaldores(vía GIT-BASH)]:
+    php artisan make:controller HomeController
+
+	REAC.php
+	Laravel tiene BLADE que es simiarl a RAzor de ASP
+-------------------------------
+[Create User MySQL]
+ 	CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+	[Nota]:
+		Los datos de conexión a una BD se pueden hacer en por defecto en el archivo "/config/database.php"
+		Pero no es recomendable, ya que si esto se está subiendo a un repositorio, subiria tambien las credenciales de la BD
+		Para esto, lo adecuado es ir al archivo ".env" en donde estarán los datos de credeciales, los cuales no son considerados en los archivos que se suben al repositorio de GIT
+[ Migraciones/Migrate + factory + seed ]
+	Proceso en el cual se realizara un seguimiento del proceso de creación de tablas para el uso de datos, así como su correspondiente proceso de baja de las tablas, con ello seria más facil tener un seguimiento de las tablas que tendrá el proyecto si es que alguien en remoto hace uso de el, si tener que tocar directamente la interfaz de BD...
+
+	# php artisan make:migration [curos]
+	Esto crea un script con 2 metodos, una para crear la tabla con las caracteristicas que necesitamos y otro con la posibilida de hacer baja de la misma...
+		#  php artisan make:migration create_cursos_table
+
+	[Nota BD MIGRACIONES] :Si se van a actualizar los datos ANTES  de llenar de datos el proyectos, se puede usar ...
+		#  php artisan migrate:fresh
+			PRIMERO BORRA TODO Y LUEGO EJECUTA LAS MIGRACIONES
+		#  php artisan migrate:refresh
+			UNO A UNO BORRA UNA MIGRACION LUEGO EJECUTA el UP del metodo
+		#  php artisan make:migration add_avatar_to_users_table
+			Permite agregar columans a la tabla sin tener que borrarla, hay que personalizarla ...
+			Al agregar una migración de update y terminar de editarla
+			Se puede ejecutar el cambio en el BD con el siguiete comando
+				#  php artisan migrate
+
+	Para actualizar atributos de una tabla hay que agregar una libreria previa...
+		# composer require doctorine/dbal
+
+	Si se desean agregar columnas en un proeycto en activo ...
+**************************************
+[Nota 2]: Se pueden hacer "checkout" de archivos y recuperar su estado de edición en el tiempo...
+	git checkout [NAME-FILE]
+
+[Usando TINKER]
+	Para poder hacer conexión de la BD con Laravel de forma autoamtica lo ideal es usar modelos, 
+		$ php artisan tinker
+		[Dentro de tinker] : el comportamiento es diferente...
+			> use App\Models\Curso;
+			> $curso = new Curso;                                                                        
+			> $curso->name = 'Laravel3'; 
+			> $curso->description = 'Un framework chido de php3';                                                                                                              
+			> $curso->save();
+
+	Si es necesario crear muchos registros iniciales(seeders) lo correcto es crear un factory...
+		$ php artisan make:factory CursoFactory
+	Si ya se tienen seeders/DatabaseSeeder.php creados, se ejecutan así:
+		$ php artisan migrate:fresh --seed
+
+	---------------------------------------------------
+	Para hacer consultas, hay que realizar consultas usando tinker(Ejemplos):...
+	> use App\Models\Curso;
+	> $cursos = Curso::all(); //para obtener todos los datos
+	> $cursos = Curso::where('categoria','Diseño web')->orderBy('id', 'desc')->get(); //Filtrado de datos x categoria y ordenados 'asc'/'desc'
+	> $cursos = Curso::select('name', 'descripcion')->where('categoria','Diseño web')->orderBy('id', 'desc')->first();
+	> $cursos = Curso::select('name', 'descripcion')->where('categoria','Diseño web')->orderBy('id', 'desc')->get();
+	//->limit(#) ó ->take(#), es indistinto, take es ALIAS limit...
+	> $cursos = Curso::select('id','name as title', 'descripcion')->where('categoria','Diseño web')->orderBy('id', 'as
+	c')->limit(2)->get();
+	//En caso del where se puede usar tambien el find...
+	> $curso = Curso::find(5);
+
+	//Tambien se pueden hacer consultas condicionales...
+	> $curso = Curso::where('id','>','47')->get();
+	> $curso = Curso::select('id', 'name as title', 'categoria')->where('descripcion','like','%corporis%')->get();
+//Ya asiganados los datos, se procede a realizar obtención de datos...
+***[ Acceso a la info ]*********************************************************************
+	Para hacer un acceso dinamico de los datos se hará vía los "Models" indicando como se guardarán en la BD... Models/User.php
+	protected function name():Attribute{
+			return new Attribute(
+				set:function($value){ return strtolower($value); }
+			);
+		}
+ +++++++++++++++++++++++++++++++++++
+[ Formateo de datos / Mutador / Estilos 00 ]
+	//Lo siguiguiente es un ejemplo de mutador que permite la obteción y guardado de datos con alteración de iniciale, así como el uso de la función "Flecha", que permite otimizar código...
+		//get: function($value){ return ucwords($value); }
+		get: fn($value)=> ucwords($value),
+			//set:function($value){ return strtolower($value); }
+			set: fn($value)=> strtolower($value)
+	+++++++++++++++++++++++++++++++++++++++++++++++
+	Para ir aplicando estilos de forma dinamica hay que tener instalado:
+	Node.JS -> https://nodejs.org/en
+	Y Tailwind -> https://tailwindcss.com/docs/guides/laravel
+
+	npm install -D tailwindcss postcss autoprefixer
+	npx tailwindcss init -p
+
+[ Lenguaje, mensajes de validación ]++++++++++++++++++++++++++++++
+	Para los avisos de mensajes de validación se obtienen de ...
+	https://github.com/Laraveles/spanish/tree/master/resources/lang/es
+
+	En el video estaban en la ruta:
+		[www]/resources/lang/es/
+	Pero en el caso de nuestra instalación estaban en:
+		[www]\vendor\laravel\framework\src\Illuminate\Translation\lang\es
+
+[Eliminación de Registros en la BD]
+	Se pueden eliminar cosas de la BD tomando en cuenta que hay que crear la ruta de operación, el metodo en el controlador, así como el formulario de operación en el BLADE correspondiente...
+		* En web
+			Route::delete('/cursos/{curso}', 'destroy')->name('cursos.destroy');
+		* En controller
+			public function destroy(Curso $curso)
+			{ //Se crea el metodo para eliminación de registros...
+				$curso->delete();
+				return redirect()->route(('cursos.index'));
+			}
+		* Y el Blade Form:
+			<form action="{{route('cursos.destroy', $curso)}}" method="POST">
+				@csrf @method('delete')
+
+[Para revisar rutas activas]
+	php artisan r:l
+	//Ayuda a revisar el estado de rutas del proyecto, aún si estas se gestionaron con "resources"
+
+	//Para distinguir la ruta en la que estamos directamente desde el link, se puede hacer lo siguiente
+		<li><a href="{{route('home')}}" class="{{ request()->routeIs('home') ? 'active': ''}}">Home</a>
+            <!--?php dump(request()->routeIs('home')); ?-->
+            @dump(request()->routeIs('home'))
+        </li>
+
+		En donde el "?" indica que la sentencia previa de "request()->routeIs('home')" (que arroja un TRUE/FALSE según sea el caso) forma parte de un IF y lo que está despues del ":" es la condicionante de ELSE...
+		Si fuera código completo seria de la sigiente forma...
+			if(request()->routeIs('home'))
+				{ echo "'active'"; }
+			else{ echo "''"; }
+		---
+[Envio de correo]
+	Nota: se pueden usar el proveedor https://mailtrap.io/home
+		Para pruebas de envio de correo controladas...
+	
+	Los datos de envio, para que no se suban a servidor y estén bien configurados se toman de /config/mail.php
+	Pero este a su ves lo toma del archivo oculto ".env"
+
+	Una vez hechas las configuraciones pertinentes, se procede a crear una script de envio...
+		php artisan make:mail ContactanosMailable
+	
+[ Estilos con Laravel -> Jetstream + Livewire ]
+	Laravel Jetstream is a beautifully designed application starter kit for Laravel and provides the perfect starting point for your next Laravel application. Jetstream provides the implementation for your application's login, registration, email verification, two-factor authentication, session management, API via Laravel Sanctum, and optional team management features.
+
+	Se puede usar de 2 formas, una de ellas es "Livewire+Blade" y la otra es "Inertia+Vue"
+		Livewire+Blade : Aprovecha las caracteristicas de los propios BLADE de Laravel+Php
+		Inertia+Vue : Es un lenguaje de plantillas que se aprovecha de una libreria de Javscript(Vue.js) pero cambiando el control de enrutamiento con Vue...
+	[Nota] : En este proyecto se usará Livewire+Blade
+
+	Instalación:
+		En proyecto NUEVO:
+			$ laravel new PROJECT-NAME --jet
+			//Ya que usa algunas tablas propias, hacer...
+			$ php artisan migrate
+			//Para que añada las tablas al proyecto...
+		Si se desea usar en un proyecto YA INICIADO:
+			//Para descargar la libreria
+			$ composer require laravel/jetstream
+			//Se tiene que escoger si sera:
+				>>*Livewire+Blade (DarkMode)
+					php artisan jetstream:install livewire --teams --dark
+				>>Inertia+Vue
+					php artisan jetstream:install inertia --teams
+			//Para finalizar(require nodejs)...
+				>>En Curso
+					npm install && npm run dev
+				>>En Jetstream page...
+					npm install
+					npm run build
+					php artisan migrate
+# 20230208
+	[NOTA]: El curso recomienda hacer todo esto en un NUEVO-PROYECTO, por lo que se dejará este proyecto "Terminado" en la rama "455ee52 (HEAD -> cl10-c23-20240208)" hasta el último commit-log
+		* Fin de c26: Como crear un formulario de Contacto, p/Correo
+# 20230209
+
+
+
+
+
+		
+
+
+
