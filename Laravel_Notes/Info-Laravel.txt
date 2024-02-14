@@ -188,11 +188,37 @@
 					npm install
 					npm run build
 					php artisan migrate
-# 20230208
+# 20240208
 	[NOTA]: El curso recomienda hacer todo esto en un NUEVO-PROYECTO, por lo que se dejará este proyecto "Terminado" en la rama "455ee52 (HEAD -> cl10-c23-20240208)" hasta el último commit-log
 		* Fin de c26: Como crear un formulario de Contacto, p/Correo
 # 20230209
+	Se inicio proce4so de actualización de laravel 10, con jetstream y tailwindcss, pero no cargaron correctamente las hojas de estilo...
+	Se detectaron muchos errores, los cuales se han ido solventando poco a poco...
+# 20240214 
+	Para inicializar las rutas de "tailwindcss.config.js"
+	En "export defailt{content:[
+		//Se añaden extras...
+        "./resources/**/*.blade.php",
+        "./resources/**/*.js",
+        "./resources/**/**.vue",
+	] ...}"
 
+	Tambien a la hora de integrar la hoja de estilos, hay que hacerlo con @vite()
+	En lugar de "link rel", como lo indica el curso...
+		<!-- Styles -->
+			@vite('resources/css/app.css')
+			<!--link rel="stylesheet" href="{{ asset('css/app.css') }}"-->
+		<!-- Styles -->
+	Ademas hay que tener en consideración correr comando(es una variante de "npm run dev"):
+		npm run watch
+	Si no existe ese comando disponible en el proyecto se puede agregar así ...
+	[En package.json], en la sección de scripts, agregar...
+		"scripts": {
+			"dev": "vite",
+			"build": "vite build",
+			"watch": "vite build --watch"
+		}
+	Esta solución se obtuvo del siguiente link: https://www.youtube.com/watch?v=LJRFZpuzhu0
 
 
 

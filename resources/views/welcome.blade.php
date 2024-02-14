@@ -11,7 +11,8 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
+        @vite('resources/css/app.css')
+        <!--link rel="stylesheet" href="{{ asset('css/app.css') }}"-->
         
         <style>
             /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com * /
@@ -20,12 +21,20 @@
             body{ font-family: 'Nunito'; }
         </style>
     </head>
+    @php
+        $color = 'red';
+    @endphp
     <body>
         <div class="container mx-auto">
-            <x-alert>
-            <!--x-alert color="blue">
+            <!--x-alert color="orange"-->
+            <x-alert color="$color" class="mb-4">
+                <x-slot name="title">Custom Title One</x-slot>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, magni eius dolores, ducimus nam obcaecati eaque voluptatibus vero optio necessitatibus sint consequatur dolorum voluptas architecto, veritatis dolore nisi laboriosam eveniet.
-            </x-alert-->
+            </x-alert>
+            <x-alert>
+                <x-slot name="title">Titulo mafufo...</x-slot>
+                Hola mundo
+            </x-alert>
         </div>
     </body>
 </html>

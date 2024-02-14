@@ -12,7 +12,7 @@ export default {
         //Se añaden extras...
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
-        './resources/js/**/*.vue',
+        "./resources/**/**.vue",
     ],
 
     theme: {
