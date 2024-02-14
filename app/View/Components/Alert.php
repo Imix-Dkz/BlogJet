@@ -8,11 +8,10 @@ use Illuminate\View\Component;
 
 class Alert extends Component
 {
-    //Se pueden para variables de la siguiente manera...
+    //Se pueden pasar propiedades(variables) de la siguiente manera...
         public $color;
     // Create a new component instance.
-    public function __construct( $color = 'orange')
-    {
+    public function __construct( $color = 'orange'){
         $this->color = $color;
     }
 

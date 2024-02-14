@@ -194,7 +194,9 @@
 # 20230209
 	Se inicio proce4so de actualización de laravel 10, con jetstream y tailwindcss, pero no cargaron correctamente las hojas de estilo...
 	Se detectaron muchos errores, los cuales se han ido solventando poco a poco...
-# 20240214 
+	Para crear un componente se usa el siguiente comando...
+		$ php artisan make:component Alert
+# 20240214 COMPONENTES DE CLASE
 	Para inicializar las rutas de "tailwindcss.config.js"
 	En "export defailt{content:[
 		//Se añaden extras...
@@ -219,6 +221,10 @@
 			"watch": "vite build --watch"
 		}
 	Esta solución se obtuvo del siguiente link: https://www.youtube.com/watch?v=LJRFZpuzhu0
+
+	[Componentes ANONIMOS]
+		Se puede usara componentes dinamicos para presentar la inforamción de una forma u otra según sea el caso...
+		<x-dynamic-component :component="$alert">
 
 
 

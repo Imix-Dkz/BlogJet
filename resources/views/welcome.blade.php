@@ -21,20 +21,20 @@
             body{ font-family: 'Nunito'; }
         </style>
     </head>
-    @php
-        $color = 'red';
-    @endphp
     <body>
         <div class="container mx-auto">
+            @php $color='orange'; $alert='alert2'; @endphp
             <!--x-alert color="orange"-->
-            <x-alert color="$color" class="mb-4">
+            <x-alert color="{{$color}}" class="mb-4">
                 <x-slot name="title">Custom Title One</x-slot>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, magni eius dolores, ducimus nam obcaecati eaque voluptatibus vero optio necessitatibus sint consequatur dolorum voluptas architecto, veritatis dolore nisi laboriosam eveniet.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, magni eius dolores...
             </x-alert>
-            <x-alert>
-                <x-slot name="title">Titulo mafufo...</x-slot>
-                Hola mundo
-            </x-alert>
+            
+            <x-dynamic-component :component="$alert">
+                    <x-slot name="title">Titulo de x-slot</x-slot>
+                    contenido del mensaje...
+            </x-dynamic-component>
+                
         </div>
     </body>
 </html>
