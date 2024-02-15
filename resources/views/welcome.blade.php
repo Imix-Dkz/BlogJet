@@ -11,7 +11,8 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         <!-- Styles -->
-        @vite('resources/css/app.css')
+        {{-- @vite('resources/css/app.css') --}}
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
         <!--link rel="stylesheet" href="{{ asset('css/app.css') }}"-->
         
         <style>

@@ -225,11 +225,19 @@
 	[Componentes ANONIMOS]
 		Se puede usara componentes dinamicos para presentar la inforamción de una forma u otra según sea el caso...
 		<x-dynamic-component :component="$alert">
+	[Personalización de plantilla...]
+		En "app.blade.php", se encuentra toda la inforamción necesaria para personlaizar el proyecto, cosas como:
+			* Lenguaje: <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+			* Titulo: <title>{{ config('app.name', 'BlogJet') }}</title>
+			* inforamción sobre los estilos: @vite(['resources/css/app.css', 'resources/js/app.js'])
+	[Nota]: En "app.blade.php"
+		@livewire('navigation-dropdown') //Según el curso
+		@livewire('navigation-menu') //Según la nueva interfaz actualizada...
 
+		También el componente "x-nav-link", posee inforamción que se encuentra en nav-link.balde.php, todo eso para control de menú de navegación...
 
-
-
-		
-
+	[Nota2]: Para un cambio de logo o actualización de cualquier componente, es adecuado actualizar las libraries dentro de la carpeta de "resources", para hacerlo de la mejor manera, lo correcto es ...
+		$ php artisan vendor:publish --tag-jetstream-views
+		//Aparentemente en la versión actual ya no es necesario...
 
 
