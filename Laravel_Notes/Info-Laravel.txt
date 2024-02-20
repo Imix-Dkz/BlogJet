@@ -132,6 +132,7 @@
 		* Y el Blade Form:
 			<form action="{{route('cursos.destroy', $curso)}}" method="POST">
 				@csrf @method('delete')
+		[Nota]: el @csrf viene de "Cross-site request forgeries", la cual es una directiva de seguridad que previene que se ejecuten exploits de seguridad que pudieran afectar los datos del sitio...
 
 [Para revisar rutas activas]
 	php artisan r:l
@@ -239,5 +240,28 @@
 	[Nota2]: Para un cambio de logo o actualización de cualquier componente, es adecuado actualizar las libraries dentro de la carpeta de "resources", para hacerlo de la mejor manera, lo correcto es ...
 		$ php artisan vendor:publish --tag-jetstream-views
 		//Aparentemente en la versión actual ya no es necesario...
-
+# 20240220 Laravel AHORA USA VITE + Middlewares
+	[VITE]
+		* Este es un extracto extra para optimizar el funcionamiento del uso de plantillas de estilos con LARAVEL, se usa de referencia el video:
+			[28 - Laravel ahora usa Vite ¿Que ocurrió con Webpack?]
+				* https://www.youtube.com/watch?v=4gxxWTe3pVA&list=PLZ2ovOgdI-kWWS9aq8mfUDkJRfYib-SvF&index=34
+		
+		En el se expresa que se dejó de usar Webpack porque no era optimo su proces de carga de estilos, ya que recargaba todos los CSS del sitio con un minimo cambio...
+			Desde el script app.blade.php, se puede tomar la siguiente ruta de estilos...
+				@vite(['resources/css/app.css', 'resources/js/app.js'])
+		* Notas para producción:
+			N1: Cuando un pryecto de laravel+vite se sube a producción, hay que tener los assets/archivos ya compilados/empaquetados...
+			Para eso hay que correr antes el comando:
+				$  npm run build
+			Con eso se generará el archivo "public/build/manifest.json" el cual contiene todos los CSS listos para operar en producción...
+			N2: Se puede dar el caso que se tenga un servidor de producción que ya tenga en consideración la compilación de los paquetes al momento de subirlos, pero no suele ser lo normal, preguntar si ese es el caso, ya que normalmente la ruta:
+				/public/build/
+			Suele ser ignorada en las reglas de carga de ".gitignore"
+	[Middlewares]
+		* Un middleware es un intermediario para validar las capacidades de acceso de un usuario a un contenido en especifico, la forma correcta de crear uno es de la siguiente forma ...
+			$ php artisan make:middleware CheckAge
+			Eso crea un archivo en la siguiente ruta...
+			/app/Http/Middleware/CheckAge.php
+		* Si ya se creo un middleware hay que registrarlo en el script de "/app/Http/Kernel.php", en la sección de $routeMiddleware
+			'age' => \App\Http\Middleware\CheckAge::class,
 

@@ -22,3 +22,11 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::get('prueba', function(){
+    return "Haz accedio a esta ruta... CORRECTAMENTE";
+})->middleware('age');
+
+Route::get('no-autorizado', function(){
+    return "Usté no éh mayo de edá...<br>O no está autorizado!!!";
+});
