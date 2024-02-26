@@ -25,7 +25,7 @@ Route::middleware([
 
 Route::get('prueba', function(){
     return "Haz accedio a esta ruta... CORRECTAMENTE";
-})->middleware('age');
+})->middleware('auth:sanctum', 'age');
 
 Route::get('no-autorizado', function(){
     return "Usté no éh mayo de edá...<br>O no está autorizado!!!";

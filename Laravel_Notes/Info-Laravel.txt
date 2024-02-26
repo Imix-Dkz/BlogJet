@@ -264,4 +264,30 @@
 			/app/Http/Middleware/CheckAge.php
 		* Si ya se creo un middleware hay que registrarlo en el script de "/app/Http/Kernel.php", en la sección de $routeMiddleware
 			'age' => \App\Http\Middleware\CheckAge::class,
+	* c32 Diseño de Base de Datos...
+		Para este ejercicio del curso se tomará en cuenta lo siguiente...
+		"Reglas de negocio1":
+			1.- Los usuarios de la página pueden registrarse y hacer login
+				La información de los usuarios que necesitamos almacenar, son nombre, correo y dirección
+			2.- Va a haber usuarios que van a tener el perfil de creadores. En el perfil de creadores debemos almacenar, titulo, biografia y website
+			3.- Los creadores pueden escribir uno o más post
+			4.- Los POST deben tener portada, titulo, descripción, categoria y pueden tener uno o más etiquetas
+			5.- Los post vana poder ser comentados por los usuarios
+			#.- s:\Documentos\DevProyects\Laravel_Notes\c32_Modelo.png
+		"Reglas de negocio2":
+			1.- Los usuarios van a poder registrarse en la plataforma y necesitamos almacenar su nombre, email y direccion
+			2.- La plataforma nos debe permitir poder asignar un rol a los usuarios registrados
+			3.- Los Usuarios con un rol, deben poder guardar información sobre su biografia, título y website en un perfil para creadores
+			4.- Los usuarios con el Rol de editor van a poder escribir post
+			5.- La información que debemos almacenar sobre los post es categoria, título, body, y uno o más etiquetas
+			6.- Los post van a poder ser comentados y debemos poder almacenar el mensaje, así como el nombre de la persona que lo escribio
+			7.- Las personas con el rol de player van a poder subir videos
+			8.- Lo que debemos almacenar del vídeo es el título del vídeo, descripción, la URL donde está almacenada y en etiquetas las cuales pueden ser uno o más
+			9.- Los videos van poder ser comentados y debemos poder almacenar tanto el mensaje como el nombre de la persona que lo escribió
+			10.- Las etiquetas que se utilicen tanto para los post como para los videos, deben sacarlo de una lista de etiquetas ya definidas
+			11.- El usuario de poder subir una imagen como foto de perfil de manera opcional
+			12.- Se puede subir una imagen de portada de manera opcional
+			#.- 
+
+		
 
