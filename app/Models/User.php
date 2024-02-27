@@ -58,4 +58,19 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    //Relación 1:1
+    public function profile()
+    { //Se añade una función para recuperar los datos de perfil del usuario
+
+        //Este ejemplo inmediato es por selección con WHERE de los datos
+        //$profile = Profile::where('user_id', $this->id)->first();
+        //return $profile;
+
+        //El siguiente es lo mismo pero con funcionalidad optimizada
+        //return $this->hasOne(Profile::class);
+        return $this->hasOne('App\Models\Profile'); //Es lo mismo que el anterior, ambas son validas
+        //return $this->hasOne('App\Models\Profile', 'foreign_key', 'local_key'); //En caso de que tengan nombres fuera de las convenciones, no deberia de dar problemas
+    }
+
 }
