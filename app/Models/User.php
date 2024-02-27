@@ -59,7 +59,7 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    //Relación 1:1
+    //Relación 1:1, Uno a Uno
     public function profile()
     { //Se añade una función para recuperar los datos de perfil del usuario
 
@@ -70,7 +70,18 @@ class User extends Authenticatable
         //El siguiente es lo mismo pero con funcionalidad optimizada
         //return $this->hasOne(Profile::class);
         return $this->hasOne('App\Models\Profile'); //Es lo mismo que el anterior, ambas son validas
-        //return $this->hasOne('App\Models\Profile', 'foreign_key', 'local_key'); //En caso de que tengan nombres fuera de las convenciones, no deberia de dar problemas
+        //return $this->hasOne('App\Models\Profile', 'foreign_key', 'local_key'); 
+        //Esto último en caso de que tengan nombres fuera de las convenciones, pero no deberia de dar problemas
+    }
+
+    //Relación 1:N, Uno a muchos
+    public function posts(){
+        return $this->hasMany('App\Models\Post');
+    }
+
+    //Relación 1:N, Uno a muchos
+    public function videos(){
+        return $this->hasMany('App\Models\Video');
     }
 
 }

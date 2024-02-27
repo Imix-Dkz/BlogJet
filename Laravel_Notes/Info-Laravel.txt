@@ -47,6 +47,9 @@
 			Al agregar una migración de update y terminar de editarla
 			Se puede ejecutar el cambio en el BD con el siguiete comando
 				#  php artisan migrate
+		
+		# En caso de que se requiera revertir SÓLO UNA de las migraciones...
+			$ php artisan migrate:rollback --path=database/migrations/2024_02_27_201021_create_posts_table.php
 
 	Para actualizar atributos de una tabla hay que agregar una libreria previa...
 		# composer require doctorine/dbal
@@ -320,6 +323,43 @@
 			Si el contenido de una tabla depende de otra tabla, lo ideal es que se use su ID
 		3ra Forma Normal : No debe de existir una dependencia funcional transitiva con respecto a una clave primaria
 			Si el contenido de la tabla no es dependiente de ella directamente, se tendria que crear una tabla adicional, con su respectiva relación de IDs
+	
+	* c36 Relación  uno a muchos
+		[Nota]: En el "c35 Relación uno a uno", se indicarón algunos pasos para unir un una tabla con otra, esto se puede ver en los archivos:
+			app/Models/Profile.php
+			app/Models/User.php
+			database/migrations/2024_02_27_030658_create_profiles_table.php
+
+			Por ejemplo...
+			//Para agregar un PK externo se tiene que indicar claramente el MISMO tipo que el PK origen en el destino y que es ÚNICO...
+                    $table->unsignedBigInteger('user_id')->unique();
+                    $table->foreign('user_id')->references('id')->on('users')
+                        ->onDelete('cascade') //Si se indica "cascade" es para que si se ELIMINA uno tambien se borreo el otro
+                        ->onUpdate('cascade'); //Si se indica "cascade" es para que si se MODIFICA uno tambien se borreo el otro
+		
+		Para continuar se puede simplificar el proceso de crear modelo/migración/seed/factory
+			$ php artisan make:model Categoria -mcsf
+		 ó	$ php artisan make:model Categoria -a
+		En donde "model" crea por defecto el archivo del modelo, pero los sufijos, hacen lo siguiente:
+			-m , Es para crear la migración
+			-c , Es para crear el controlador
+			-s , Es para crear el seeder
+			-f , Es para crear el factory 
+			-a , Es para crear todas las anteriores
+
+		[Nota]: Ejemplos de la declaración en los MODELOS de los tipos de relaciones
+			    //Relación 1:N, Uno a muchos
+				public function posts(){ //Un usuario puede tener varios post
+					return $this->hasMany('App\Models\Post');
+				}
+				//Relación N:1, Muchos a Uno
+				public function post(){ //Muchos post pueden pertenecer a un usuario
+					return $this->belongsTo('App\Models\User');
+				}
+			
+		
+		
+
 
 
 		
