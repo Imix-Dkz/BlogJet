@@ -264,6 +264,7 @@
 			/app/Http/Middleware/CheckAge.php
 		* Si ya se creo un middleware hay que registrarlo en el script de "/app/Http/Kernel.php", en la sección de $routeMiddleware
 			'age' => \App\Http\Middleware\CheckAge::class,
+	[ Diseño de Base de DATOS ]
 	* c32 Diseño de Base de Datos...
 		Para este ejercicio del curso se tomará en cuenta lo siguiente...
 		"Reglas de negocio1":
@@ -274,6 +275,7 @@
 			4.- Los POST deben tener portada, titulo, descripción, categoria y pueden tener uno o más etiquetas
 			5.- Los post vana poder ser comentados por los usuarios
 			#.- s:\Documentos\DevProyects\Laravel_Notes\c32_Modelo.png
+	* c33 Diseño de Base de datos(MODELO LÓGICO)
 		"Reglas de negocio2":
 			1.- Los usuarios van a poder registrarse en la plataforma y necesitamos almacenar su nombre, email y direccion
 			2.- La plataforma nos debe permitir poder asignar un rol a los usuarios registrados
@@ -287,7 +289,38 @@
 			10.- Las etiquetas que se utilicen tanto para los post como para los videos, deben sacarlo de una lista de etiquetas ya definidas
 			11.- El usuario de poder subir una imagen como foto de perfil de manera opcional
 			12.- Se puede subir una imagen de portada de manera opcional
-			#.- 
+			#.- Diagrama en:
+				s:\Documentos\DevProyects\Laravel_Notes\c33_Modelo_Pt1.png
+				s:\Documentos\DevProyects\Laravel_Notes\c33_Modelo_Pt2.png
+
+		[Nt1]: Se recomienda usar DIA(Programa para generar diagramas), para realizar un primer borrador con el cual pasar al proceso de maquetado.
+			Ya hecho el borrador, lo preferible es crear la estructura de Base de Datos con MySQL Workbench
+		[Nt2]: En el caso de generación de relaciones 1:1 ó 1:n, donde se use de referencia una llave ID dentro de otra tabla, se recomienda que su nomenclatura sea singular dentro de la tabla, para seguir las convenciones de LARAVEL
+		[Nt3]: Se pueden generar tablas multirelacionales pero la convención de LARAVEL es que se use el nombre de tabla 
+			TABLE-NM."able", por ejemplo:
+				"Queso" = Queseable
+				"Imagen" = Imageable
+				"Gato" = Gateable
+			#Generando con esto campos como:
+				Queseable, con las columnas "Queseableable_id" y "Queseableable_type"
+				Imageable, con las columnas "Imageableable_id" y "Imageableable_type"
+				Gateable, con las columnas "Gateableable_id" y "Gateableable_type"
+		[Nt4]: En estos últimos casos se pueden usar PK(Primary-Key) compuestas que permitan evitar confuciones en el proceso de generación de registros ÚNICOS
+
+		En este ejercicio, se aplicaron estas 2 últimas indicaciones en las tablas "images" y "comments" quedando de la siguiente forma:
+			s:\Documentos\DevProyects\Laravel_Notes\c33_Modelo_SQL-Workbench.png
+	* c34 Normalización de Base de datos
+		1era Forma Normal : Si se cuenta con un campo compuesto, lo correcto es añadir segmentos adicionales de esos valores compuestos, ejemplo:
+			Dirección:
+				* calle
+				* numero
+				* colonia/distrito
+				* ciudad
+		2da Forma Normal : Debe de existir una dependencia funcional completa con respecto a su llave primaria
+			Si el contenido de una tabla depende de otra tabla, lo ideal es que se use su ID
+		3ra Forma Normal : No debe de existir una dependencia funcional transitiva con respecto a una clave primaria
+			Si el contenido de la tabla no es dependiente de ella directamente, se tendria que crear una tabla adicional, con su respectiva relación de IDs
+
 
 		
 
