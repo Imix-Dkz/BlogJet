@@ -75,13 +75,17 @@ class User extends Authenticatable
     }
 
     //Relación 1:N, Uno a muchos
-    public function posts(){
+    public function posts(){ //Un usuario puede tener varios post
         return $this->hasMany('App\Models\Post');
     }
+    //Relación N:1, Muchos a Uno
+    public function post(){ //Muchos post pueden pertenecer a un usuario
+        return $this->belongsTo('App\Models\User');
+    }
 
-    //Relación 1:N, Uno a muchos
-    public function videos(){
-        return $this->hasMany('App\Models\Video');
+    //Relación N:N, Muchos a muchos...
+    public function roles(){ //Muchos usuarios pueden poser varios roles
+        return $this->belongsToMany('App\Models\Role');
     }
 
 }

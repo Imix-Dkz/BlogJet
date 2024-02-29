@@ -356,7 +356,16 @@
 				public function post(){ //Muchos post pueden pertenecer a un usuario
 					return $this->belongsTo('App\Models\User');
 				}
-			
+				//Relación N:N, Muchos a muchos...
+				public function roles(){ //Muchos usuarios pueden poser varios roles
+					return $this->belongsToMany('App\Models\Role');
+				}
+	* c37 Relaciones muchos a muchos, (Many To Many), N:N
+		Una vez creadas las tavlas y modelos se pueden agregar o quietar roles desde thinker con el comando "Attach"
+		  $ php artisan tinker
+		  	>use App\Models\User;
+			> $user = User::find(1);
+			> $user->roles()->attach(1);
 		
 		
 
