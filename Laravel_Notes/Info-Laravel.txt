@@ -1,3 +1,12 @@
+Se agrega el proyecto de curso *Blogjet*, x ahora va en el Cap27
+    Del Canal *Coders Free*
+      Nombre Curso: *Curso Laravel 10 desde cero*
+      Este curso viene de la lista de reproducción:
+        https://www.youtube.com/watch?v=Hp0M1SoK2AU&list=PLZ2ovOgdI-kVeYs74jL3kOj-AyoDKCXRy
+
+    Se creo este Laravel-Project para cotinuidad del capítulo:
+        27 - Qué es Laravel Jetstream - Curso Laravel 9 desde cero
+************************************************************************************************
 20240201 - Original Init
 20240203 - cl10 > Fin de c20: Que es asignación masiva
 20240208 - cl10 > Fin de c26: Como crear un formulario de Contacto, p/Correo
