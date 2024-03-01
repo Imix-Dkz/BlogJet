@@ -366,7 +366,82 @@
 		  	>use App\Models\User;
 			> $user = User::find(1);
 			> $user->roles()->attach(1);
+			# Se pueden usar arreglos
+			> $user->roles()->attach([1,2,3]);
+		# Para quitarle los roles se usa "detach"
+			> $user = User::find(2);
+			> $user->roles()->attach(2);
+		# Para QUITAR TODOS los vinculos(roles) previos y crear nuevos se usa "sync"
+			> $user->roles()->sync([1,2]);
+
+		[Nota]: Cuado se crean migraciones, la nomenclatura de la misma tiene que ser clara, pero es preferibel que sigan un orden alfabetico, por ejemplo:
+			$ php artisan make:migration create_permiso_role_table
+			# En donde la "C" va antes que la "P" esta va antes que la "R"
+	* c38 Relación Uno a Uno, POLIMORFICA
+		Para este caso se está considerando una tabla de IMAGENES indistinta en la que estarán todas las imagenes de la BD, ya sean de usuarios o de post...
+
+		Para este caso se creará una tabal con relaciones polimirficas con la siguiente distribución, donde el identificador será un PK-Compuesto:
+			| url  | imageable_id  | imageable_type |
+			| url1 | 1				| App\Model\User |
+			| url2 | 2				| App\Model\User |
+			| url3 | 1				| App\Model\User |
+			| url4 | 2				| App\Model\User |
+			| url4 | 3				| App\Model\User |
+			| url4 | 4				| App\Model\User |
 		
+		Para lograr esto al momento de crear la tabla en la migración se indica una PK-compuesta así:
+			Schema::create('images', function (Blueprint $table) {
+				//Se añaden los campos necesarios
+					$table->string('url');
+					$table->unsignedBigInteger('imageable_id');
+					$table->unsignedBigInteger('imageable_type');
+					$table->primary('imageable', 'imageable_type');
+				$table->timestamps();
+			});
+
+		//Ejemplo de insersión de datos vía TINKER
+			$ php artisan tinker
+			> use App\Models\Image;
+			> Image::create(['url'=>'url 1', 'imageable_id'=>1, 'imageable_type'=>'App\Models\User']);
+			# ASi se ve una inserción correcta de datos...
+			= App\Models\Image {#5331
+				url: "url 1",
+				imageable_id: 1,
+				imageable_type: "App\Models\User",
+				updated_at: "2024-03-01 00:26:23",
+				created_at: "2024-03-01 00:26:23",
+				id: 0,
+			}
+
+		// Para conprobar que se hizo bien la inserción se puede hacer de la siguiente manera...
+			# Se delcara el uso del MODELO
+			 use App\Models\User;
+			# Se indica el ID del usuario que se está buscando...
+			 > $user=User::find(1);
+				= App\Models\User {#6065 ...}
+			# Ya indentificado se procede a verificar su relación 
+			 > $user->image;
+			 = App\Models\Image {#5361 ...}
+			# Y se puede ver incluso el tipo de relación de Eloquent...
+			 > $user->image();
+			 = Illuminate\Database\Eloquent\Relations\MorphOne {#5345}
+
+		//Si ya se tiene identificado el usuario, se le puede madar a crear la iamgen directo desde el ...
+			> $user=User::find(1);
+			= App\Models\User {#6337 ...}
+			> $user->image()->create(['url'=>'url 1']);
+			= App\Models\Image {#6335 
+				url: "url 1",
+				imageable_id: 1,
+				imageable_type: "App\Models\User",
+				updated_at: "2024-03-01 00:41:08",
+				created_at: "2024-03-01 00:41:08",
+				id: 0,
+			}
+		
+
+
+1		
 		
 
 

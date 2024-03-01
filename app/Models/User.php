@@ -88,4 +88,10 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Role');
     }
 
+    //Relación 1:1, Uno a Uno, POLIMORFICA
+    public function image()
+    { //Ya que será variable el origen de solicitud de URLs de imagenes para los usuarios, se hará de la siguiente forma
+        return $this->morphOne('App\Models\Image', 'imageable');
+    }
+
 }
