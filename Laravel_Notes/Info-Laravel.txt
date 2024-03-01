@@ -456,6 +456,8 @@
 			| 6  |comentario4| 2				| App\Model\Video|
 			| 7  |comentario4| 3				| App\Model\Video|
 			| 8  |comentario4| 1				| App\Model\Video|
+
+			Img Ref s:\Documentos\DevProyects\Laravel_Notes\c40_Rel_MuchosAMuchos_POLIMORFICA.png
 		
 		// Similar al caso anterior hay que indicar en el modelo que es una tabla POLIMORFICA
 			//Esta es una tabla polimorfica...
@@ -489,10 +491,16 @@
 				return $this->morphedByMany('App\Models\Video', 'taggable');
 			}
 
+[Notas Finales]
 
-1		
+Con estas últimas notas termina el curoso de laravel que comenzó en :
+	c1 : https://www.youtube.com/watch?v=3e1IsZJuYAw&list=PLZ2ovOgdI-kWWS9aq8mfUDkJRfYib-SvF&index=1
+	y concluyo en ...
+	c40 : https://www.youtube.com/watch?v=iHqIFcVeC7A&list=PLZ2ovOgdI-kWWS9aq8mfUDkJRfYib-SvF&index=45
 		
-
+Las notas de este curso proyecto terminarán Aqui, pero por se seguiran creando nuevos proyectos ...
+Se deja una diagrama final del resultado de las relaciones del proyecto ...
+	ImgRef s:\Documentos\DevProyects\Laravel_Notes\c40_Rel_MuchosAMuchos_POLIMORFICA_Final.png
 
 
 		
