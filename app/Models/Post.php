@@ -24,4 +24,8 @@ class Post extends Model
     public function comments(){
         return $this->morphMany('App\Models\Commentable', 'commentable');
     }
+    //Relacion N:N, Muchos a Muchos POLIMORFICA
+    public function posts(){
+        return $this->morphMany('App\Models\Taggable', 'taggable');
+    }
 }

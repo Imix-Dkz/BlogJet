@@ -381,6 +381,7 @@
 		Para este caso se está considerando una tabla de IMAGENES indistinta en la que estarán todas las imagenes de la BD, ya sean de usuarios o de post...
 
 		Para este caso se creará una tabal con relaciones polimirficas con la siguiente distribución, donde el identificador será un PK-Compuesto:
+			[ imageable ]
 			| url  | imageable_id  | imageable_type |
 			| url1 | 1				| App\Model\User |
 			| url2 | 2				| App\Model\User |
@@ -398,6 +399,11 @@
 					$table->primary('imageable', 'imageable_type');
 				$table->timestamps();
 			});
+
+		// Si ya se creó la migración, se puede indicar en el modelo el polimorfismo de la siguiente forma ...
+			public function imageable(){
+				return $this->morphTo();
+			}
 
 		//Ejemplo de insersión de datos vía TINKER
 			$ php artisan tinker
@@ -440,6 +446,7 @@
 			}
 	* c39 Relación Uno a Muchos, POLIMORFICA
 		Similar al caso anterior en el que hay imagenes para más de un contexto, se puede usar la misma lógica para el caso de los comentarios, en los cuales se puede hace una tabla con PK-Compuesta, pero para los casos de comentarioa de POST o de comentarios de Video o cualquier otro nuevo contenido...
+			[ commentable ]
 			| id | mensaje   | commentable_id  | commentable_type |
 			| 1  |comentario1| 1				| App\Model\Post |
 			| 2  |comentario2| 2				| App\Model\Post |
@@ -449,6 +456,38 @@
 			| 6  |comentario4| 2				| App\Model\Video|
 			| 7  |comentario4| 3				| App\Model\Video|
 			| 8  |comentario4| 1				| App\Model\Video|
+		
+		// Similar al caso anterior hay que indicar en el modelo que es una tabla POLIMORFICA
+			//Esta es una tabla polimorfica...
+			public function commentable(){
+				return $this->morphTo();
+			}
+	* c40 Relación N:N, Muchos a Muchos POLIMORFICA
+		Para este caso tenemos un caso de una tabla de TAGS que de forma dinamica podria tener datos de más de una tabla extra, por lo que se añada esta distribución... 
+			[ taggeable ]
+			| taggeable_id  | taggeable_type  | tag_id |
+			| 1				| App\Models\Post | 1 |
+			| 1				| App\Models\Post | 1 |
+			| 2				| App\Models\Post | 2 |
+			| 3				| App\Models\Post | 3 |
+			| 1				| App\Models\Video| 1 |
+			| 1				| App\Models\Video| 1 |
+			| 2				| App\Models\Video| 2 |
+			| 3				| App\Models\Video| 3 |
+
+		# Para esto en los modelos de Post y video se usa...
+			//Relacion N:N, Muchos a Muchos POLIMORFICA
+			public function posts(){
+				return $this->morphMany('App\Models\Taggable', 'taggable');
+			}
+		# Y en el modelo TAG se indica de la siguiente manera...
+		//Relacion N:N, Muchos a Muchos POLIMORFICA, INVERSA
+			public function posts(){
+				return $this->morphedByMany('App\Models\Post', 'taggable');
+			}
+			public function videos(){
+				return $this->morphedByMany('App\Models\Video', 'taggable');
+			}
 
 
 1		
