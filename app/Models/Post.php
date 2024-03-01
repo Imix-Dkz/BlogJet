@@ -19,4 +19,9 @@ class Post extends Model
     { //Ya que será variable el origen de solicitud de URLs de imagenes para los usuarios, se hará de la siguiente forma
         return $this->morphOne('App\Models\Image', 'imageable');
     }
+
+    //Relacion 1:N, Uno a Muchos POLIMORFICA
+    public function comments(){
+        return $this->morphMany('App\Models\Commentable', 'commentable');
+    }
 }

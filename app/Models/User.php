@@ -78,6 +78,13 @@ class User extends Authenticatable
     public function posts(){ //Un usuario puede tener varios post
         return $this->hasMany('App\Models\Post');
     }
+    public function videos(){ //Un usuario puede tener varios videos
+        return $this->hasMany('App\Models\Video');
+    }
+    public function comments(){ //Un usuario puede tener varios videos
+        return $this->hasMany('App\Models\Comments');
+    }
+
     //Relación N:1, Muchos a Uno
     public function post(){ //Muchos post pueden pertenecer a un usuario
         return $this->belongsTo('App\Models\User');

@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class Comments extends Model
 {
     use HasFactory;
 
-    //Relación N:1, Muchos a Uno
+    //Relación 1:N, uno a muchos
     public function user(){
         return $this->belongsTo('App\Models\User');
     }
 
-    //Relacion 1:N, Uno a Muchos POLIMORFICA
-    public function comments(){
-        return $this->morphMany('App\Models\Commentable', 'commentable');
+    //Esta es una tabla polimorfica...
+    public function commentable(){
+        return $this->morphTo();
     }
 }

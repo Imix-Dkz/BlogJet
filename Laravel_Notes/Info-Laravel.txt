@@ -438,7 +438,17 @@
 				created_at: "2024-03-01 00:41:08",
 				id: 0,
 			}
-		
+	* c39 Relación Uno a Muchos, POLIMORFICA
+		Similar al caso anterior en el que hay imagenes para más de un contexto, se puede usar la misma lógica para el caso de los comentarios, en los cuales se puede hace una tabla con PK-Compuesta, pero para los casos de comentarioa de POST o de comentarios de Video o cualquier otro nuevo contenido...
+			| id | mensaje   | commentable_id  | commentable_type |
+			| 1  |comentario1| 1				| App\Model\Post |
+			| 2  |comentario2| 2				| App\Model\Post |
+			| 3  |comentario3| 3				| App\Model\Post |
+			| 4  |comentario4| 1				| App\Model\Post |
+			| 5  |comentario4| 1				| App\Model\Video|
+			| 6  |comentario4| 2				| App\Model\Video|
+			| 7  |comentario4| 3				| App\Model\Video|
+			| 8  |comentario4| 1				| App\Model\Video|
 
 
 1		
